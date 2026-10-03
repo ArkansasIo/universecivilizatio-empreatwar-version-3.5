@@ -1,0 +1,28 @@
+{
+  "database": {
+    "engine": "PostgreSQL",
+    "version": "16.2",
+    "name": "universe_civilization_db",
+    "host": "127.0.0.1",
+    "port": 5432,
+    "user": "admin",
+    "password_env": "DB_PASSWORD",
+    "ssl": false
+  },
+  "pool": {
+    "min": 2,
+    "max": 25,
+    "idle_timeout_ms": 30000,
+    "connection_timeout_ms": 5000
+  },
+  "migrations": {
+    "auto_migrate": true,
+    "table_name": "_sql_schema_migrations",
+    "schema_file": "src/db/schema.sql",
+    "seed_file": "src/db/seed.sql"
+  },
+  "themes_config": {
+    "default_background_theme": "theme_white_default",
+    "secondary_theme": "theme_navy_dark"
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Commander profile, empire details, and active progression status.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier of the player" },
+        "username": { "type": "string", "maxLength": 64, "description": "Commander callsign or handle" },
+        "email": { "type": "string", "maxLength": 128, "description": "User email address" },
+        "race": { "type": "string", "maxLength": 32, "description": "Civilization species / faction" },
+        "empireName": { "type": "string", "maxLength": 96, "description": "Imperial sovereignty name" },
+        "capitalName": { "type": "string", "maxLength": 64, "description": "Capital homeworld designation" },
+        "leaderTitle": { "type": "string", "maxLength": 64, "description": "Official leadership title" },
+        "level": { "type": "number", "description": "RPG command level" },
+        "rank": { "type": "string", "maxLength": 64, "description": "Military command rank" },
+        "updatedAt": { "type": "string", "description": "ISO timestamp of last profile update" }
+      },
+      "required": ["id", "username", "race", "empireName"]
+    },
+    "UserResources": {
+      "title": "UserResources",
+      "description": "Current imperial stockpiles, turn counters, and energy reserves.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Owner player ID" },
+        "turns": { "type": "number", "description": "Available strategic action turns" },
+        "naquadah": { "type": "number", "description": "Current Naquadah stockpile" },
+        "crystal": { "type": "number", "description": "Current Crystal stockpile" },
+        "trinium": { "type": "number", "description": "Current Trinium stockpile" },
+        "energy": { "type": "number", "description": "Current available power output" },
+        "bankedNaquadah": { "type": "number", "description": "Naquadah secured in the bank vault" },
+        "gateTokens": { "type": "number", "description": "Consumable Alpha Exploration Tokens" },
+        "dimensionalTokens": { "type": "number", "description": "Consumable Delta Dimensional Tokens" },
+        "raidTokens": { "type": "number", "description": "Consumable Omega Raid Beacons" },
+        "updatedAt": { "type": "string", "description": "ISO timestamp of last resource update" }
+      },
+      "required": ["userId", "turns", "naquadah", "crystal", "trinium"]
+    },
+    "UserColony": {
+      "title": "UserColony",
+      "description": "Colony planet infrastructure and production installations.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique colony identifier" },
+        "userId": { "type": "string", "description": "Owner commander player ID" },
+        "name": { "type": "string", "maxLength": 64, "description": "Planet / colony name" },
+        "type": { "type": "string", "maxLength": 32, "description": "Planet climate or classification" },
+        "metalMineLevel": { "type": "number", "description": "Metal / Naquadah mine building level" },
+        "crystalMineLevel": { "type": "number", "description": "Crystal mine building level" },
+        "deuteriumSynthesizerLevel": { "type": "number", "description": "Trinium / Deuterium facility level" },
+        "solarPlantLevel": { "type": "number", "description": "Solar / Power plant level" },
+        "roboticsFactoryLevel": { "type": "number", "description": "Robotics factory tier" },
+        "shipyardLevel": { "type": "number", "description": "Orbital shipyard tier" },
+        "updatedAt": { "type": "string", "description": "ISO timestamp of last update" }
+      },
+      "required": ["id", "userId", "name"]
+    },
+    "MarketOrder": {
+      "title": "MarketOrder",
+      "description": "Interstellar trade exchange buy/sell contracts.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique order identifier" },
+        "sellerId": { "type": "string", "description": "Player ID listing the contract" },
+        "sellerName": { "type": "string", "maxLength": 64, "description": "Player callsign" },
+        "resourceType": { "type": "string", "enum": ["naquadah", "crystal", "trinium"], "description": "Resource being traded" },
+        "amount": { "type": "number", "description": "Quantity of resources" },
+        "pricePerUnit": { "type": "number", "description": "Unit exchange price" },
+        "createdAt": { "type": "string", "description": "Creation timestamp" }
+      },
+      "required": ["id", "sellerId", "resourceType", "amount", "pricePerUnit"]
+    },
+    "SystemConfig": {
+      "title": "SystemConfig",
+      "description": "Global server configuration and universe multipliers.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Configuration document identifier" },
+        "universeSpeed": { "type": "number", "description": "Simulation game speed multiplier" },
+        "fleetSpeed": { "type": "number", "description": "Fleet transit speed multiplier" },
+        "resourceProductionMultiplier": { "type": "number", "description": "Global production rate multiplier" },
+        "updatedAt": { "type": "string", "description": "Last updated timestamp" }
+      },
+      "required": ["id", "universeSpeed", "fleetSpeed"]
+    },
+    "AdminAccount": {
+      "title": "AdminAccount",
+      "description": "System administrator account credentials and security clearance record.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Admin unique identifier" },
+        "username": { "type": "string", "maxLength": 64, "description": "Admin username" },
+        "email": { "type": "string", "maxLength": 128, "description": "Admin verified email" },
+        "role": { "type": "string", "enum": ["super_admin", "administrator", "operator", "moderator"], "description": "Security clearance role" },
+        "title": { "type": "string", "maxLength": 96, "description": "Official admin designation" },
+        "permissions": { "type": "array", "items": { "type": "string" }, "description": "List of granted admin permissions" },
+        "updatedAt": { "type": "string", "description": "Last updated timestamp" }
+      },
+      "required": ["id", "username", "email", "role"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/profile/{profileId}": {
+      "schema": "UserProfile",
+      "description": "Commander profile document containing identity and progression."
+    },
+    "/users/{userId}/resources/{resourceId}": {
+      "schema": "UserResources",
+      "description": "Resource reserves for a specific commander."
+    },
+    "/users/{userId}/colonies/{colonyId}": {
+      "schema": "UserColony",
+      "description": "Planetary colonies and infrastructure owned by the commander."
+    },
+    "/market_orders/{orderId}": {
+      "schema": "MarketOrder",
+      "description": "Public interstellar galactic market trade orders."
+    },
+    "/system_configs/{configId}": {
+      "schema": "SystemConfig",
+      "description": "Global universe configurations maintained by administration."
+    },
+    "/admins/{adminId}": {
+      "schema": "AdminAccount",
+      "description": "System administrator directory and security clearance levels."
+    }
+  }
+}

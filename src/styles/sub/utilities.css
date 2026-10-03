@@ -1,0 +1,76 @@
+/* ==========================================================================
+   UTILITIES SUB-CSS ENGINE: Custom Helpers, Glows, & Animations
+   ========================================================================== */
+
+/* Custom High Contrast Text Glows */
+.text-glow-navy {
+  text-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
+}
+
+.text-glow-amber {
+  text-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
+}
+
+/* Custom Navy Theme Glass Effects */
+.glass-navy {
+  background: rgba(11, 19, 41, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+}
+
+/* Scrollbar Customization */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-alt);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-primary);
+}
+
+/* ==========================================================================
+   MOBILE & TABLET RESPONSIVE ENGINE (iPhone 15, iPad 9, Mobile Web)
+   ========================================================================== */
+.pb-safe {
+  padding-bottom: max(16px, env(safe-area-inset-bottom, 16px));
+}
+
+.pt-safe {
+  padding-top: max(8px, env(safe-area-inset-top, 8px));
+}
+
+.pl-safe {
+  padding-left: max(8px, env(safe-area-inset-left, 8px));
+}
+
+.pr-safe {
+  padding-right: max(8px, env(safe-area-inset-right, 8px));
+}
+
+/* Hide scrollbars for slick swiping carousels on touch devices */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Minimum tactile touch targets on touch devices */
+@media (pointer: coarse) {
+  button, a, input, select {
+    touch-action: manipulation;
+  }
+}
+

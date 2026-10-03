@@ -1,0 +1,8 @@
+{
+  "name": "Universe Civilization: Empire at War v3.5 - SGW 3.5",
+  "description": "Command interface for Universe Civilization: Empire at War, featuring strategic empire management, turn processing, military combat, covert espionage, armory, and planetary expansion. Version 3.5 SGW-v2.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

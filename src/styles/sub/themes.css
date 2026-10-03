@@ -1,0 +1,130 @@
+/* ==========================================================================
+   THEMES SUB-CSS ENGINE: Basic Default White & Dark Navy Blue Themes
+   ========================================================================== */
+
+/* 1. DEFAULT WHITE BACKGROUND THEME (Clean Light Mode) */
+:root,
+.theme-white-default {
+  --bg-main: #ffffff;
+  --bg-alt: #f8fafc;
+  --bg-panel: #ffffff;
+  --bg-card: #f1f5f9;
+  --bg-header: #0f172a;
+  --bg-sidebar: #ffffff;
+
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --text-subtle: #64748b;
+  --text-header: #ffffff;
+
+  --border-color: #cbd5e1;
+  --border-light: #e2e8f0;
+  --border-[#dedede]: #dedede;
+  --border-focus: #0284c7;
+
+  --accent-primary: #0284c7;
+  --accent-primary-hover: #0369a1;
+  --accent-secondary: #0d9488;
+  --accent-amber: #d97706;
+  --accent-[#111]: #111111;
+
+  --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --panel-border: 1px solid #cbd5e1;
+  --theme-name: "Default White Background";
+}
+
+/* 2. DARK NAVY BLUE THEME (Deep Cosmic Navy Mode) */
+.theme-navy-dark {
+  --bg-main: #030712;
+  --bg-alt: #0b1329;
+  --bg-panel: #0f172a;
+  --bg-card: #1e293b;
+  --bg-header: #070d1d;
+  --bg-sidebar: #0b1329;
+
+  --text-main: #f8fafc;
+  --text-muted: #cbd5e1;
+  --text-subtle: #94a3b8;
+  --text-header: #38bdf8;
+
+  --border-color: #1e293b;
+  --border-light: #334155;
+  --border-[#dedede]: #1e293b;
+  --border-focus: #38bdf8;
+
+  --accent-primary: #38bdf8;
+  --accent-primary-hover: #0284c7;
+  --accent-secondary: #2dd4bf;
+  --accent-amber: #fbbf24;
+  --accent-[#111]: #38bdf8;
+
+  --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  --panel-border: 1px solid #1e293b;
+  --theme-name: "Dark Navy Blue";
+}
+
+/* 3. IMPERIAL OBSIDIAN THEME (Stealth Dark Mode) */
+.theme-imperial-obsidian {
+  --bg-main: #000000;
+  --bg-alt: #09090b;
+  --bg-panel: #18181b;
+  --bg-card: #27272a;
+  --bg-header: #000000;
+  --bg-sidebar: #09090b;
+
+  --text-main: #f4f4f5;
+  --text-muted: #a1a1aa;
+  --text-subtle: #71717a;
+  --text-header: #f4f4f5;
+
+  --border-color: #27272a;
+  --border-light: #3f3f46;
+  --border-[#dedede]: #27272a;
+  --border-focus: #a1a1aa;
+
+  --accent-primary: #e4e4e7;
+  --accent-primary-hover: #ffffff;
+  --accent-secondary: #3f3f46;
+  --accent-amber: #f59e0b;
+  --accent-[#111]: #ffffff;
+
+  --card-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+  --panel-border: 1px solid #27272a;
+  --theme-name: "Imperial Obsidian";
+}
+
+/* Global Theme Transition */
+body, #root, .theme-container {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+/* Theme Dependent Overrides for Navy Dark Mode */
+.theme-navy-dark .bg-white {
+  background-color: var(--bg-panel) !important;
+  color: var(--text-main) !important;
+}
+
+.theme-navy-dark .bg-\[\#fafafa\],
+.theme-navy-dark .bg-\[\#f8fafc\] {
+  background-color: var(--bg-card) !important;
+}
+
+.theme-navy-dark .border-\[\#dedede\],
+.theme-navy-dark .border-\[\#ccc\],
+.theme-navy-dark .border-\[\#eee\] {
+  border-color: var(--border-light) !important;
+}
+
+.theme-navy-dark .text-\[\#111\],
+.theme-navy-dark .text-\[\#111111\],
+.theme-navy-dark .text-\[\#333\] {
+  color: #f8fafc !important;
+}
+
+.theme-navy-dark .text-\[\#555\],
+.theme-navy-dark .text-\[\#666\],
+.theme-navy-dark .text-\[\#777\] {
+  color: #94a3b8 !important;
+}

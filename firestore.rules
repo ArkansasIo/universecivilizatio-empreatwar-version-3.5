@@ -1,0 +1,151 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Common helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (
+        (request.auth.token.email == 'stephendeline258@gmail.com' && request.auth.token.email_verified == true) ||
+        (request.auth.token.email == 's.sstargate@gmail.com' && request.auth.token.email_verified == true) ||
+        (request.auth.token.email == 'root@systems-mainframe.root') ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // Validation helpers
+    function isValidUserProfile(data) {
+      return data.keys().hasAll(['id', 'username', 'race', 'empireName']) &&
+        data.id is string && data.id.size() <= 128 &&
+        data.username is string && data.username.size() <= 64 &&
+        data.race is string && data.race.size() <= 32 &&
+        data.empireName is string && data.empireName.size() <= 96;
+    }
+
+    function isValidUserResources(data) {
+      return data.keys().hasAll(['userId', 'turns', 'naquadah', 'crystal', 'trinium']) &&
+        data.userId is string && data.userId.size() <= 128 &&
+        data.turns is number && data.turns >= 0 &&
+        data.naquadah is number && data.naquadah >= 0 &&
+        data.crystal is number && data.crystal >= 0 &&
+        data.trinium is number && data.trinium >= 0;
+    }
+
+    function isValidUserColony(data) {
+      return data.keys().hasAll(['id', 'userId', 'name']) &&
+        data.id is string && data.id.size() <= 128 &&
+        data.userId is string && data.userId.size() <= 128 &&
+        data.name is string && data.name.size() <= 64;
+    }
+
+    function isValidMarketOrder(data) {
+      return data.keys().hasAll(['id', 'sellerId', 'resourceType', 'amount', 'pricePerUnit']) &&
+        data.id is string && data.id.size() <= 128 &&
+        data.sellerId is string && data.sellerId.size() <= 128 &&
+        data.resourceType in ['naquadah', 'crystal', 'trinium'] &&
+        data.amount is number && data.amount > 0 &&
+        data.pricePerUnit is number && data.pricePerUnit > 0;
+    }
+
+    function isValidSystemConfig(data) {
+      return data.keys().hasAll(['id', 'universeSpeed', 'fleetSpeed']) &&
+        data.id is string && data.id.size() <= 128 &&
+        data.universeSpeed is number && data.universeSpeed > 0 &&
+        data.fleetSpeed is number && data.fleetSpeed > 0;
+    }
+
+    // Test connection document
+    match /test/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // User Profile subcollection
+    match /users/{userId}/profile/{profileId} {
+      allow get: if isOwner(userId) || isAdmin();
+      allow list: if isOwner(userId) || isAdmin();
+      allow create: if (isOwner(userId) || isAdmin()) &&
+        isValidUserProfile(incoming()) &&
+        incoming().id == userId;
+      allow update: if (isOwner(userId) || isAdmin()) &&
+        isValidUserProfile(incoming()) &&
+        incoming().id == existing().id;
+      allow delete: if isAdmin();
+    }
+
+    // User Resources subcollection
+    match /users/{userId}/resources/{resourceId} {
+      allow get: if isOwner(userId) || isAdmin();
+      allow list: if isOwner(userId) || isAdmin();
+      allow create: if (isOwner(userId) || isAdmin()) &&
+        isValidUserResources(incoming()) &&
+        incoming().userId == userId;
+      allow update: if (isOwner(userId) || isAdmin()) &&
+        isValidUserResources(incoming()) &&
+        incoming().userId == existing().userId;
+      allow delete: if isAdmin();
+    }
+
+    // User Colonies subcollection
+    match /users/{userId}/colonies/{colonyId} {
+      allow get: if isOwner(userId) || isAdmin();
+      allow list: if isOwner(userId) || isAdmin();
+      allow create: if (isOwner(userId) || isAdmin()) &&
+        isValidUserColony(incoming()) &&
+        incoming().userId == userId;
+      allow update: if (isOwner(userId) || isAdmin()) &&
+        isValidUserColony(incoming()) &&
+        incoming().userId == existing().userId;
+      allow delete: if isOwner(userId) || isAdmin();
+    }
+
+    // Public Market Orders
+    match /market_orders/{orderId} {
+      allow get: if isSignedIn();
+      allow list: if isSignedIn();
+      allow create: if isSignedIn() &&
+        isValidMarketOrder(incoming()) &&
+        incoming().sellerId == request.auth.uid;
+      allow update: if (isSignedIn() && incoming().sellerId == request.auth.uid && isValidMarketOrder(incoming())) || isAdmin();
+      allow delete: if (isSignedIn() && existing().sellerId == request.auth.uid) || isAdmin();
+    }
+
+    // System configurations
+    match /system_configs/{configId} {
+      allow get: if true;
+      allow list: if true;
+      allow create, update, delete: if isAdmin() && isValidSystemConfig(incoming());
+    }
+
+    // System Administration & Root Credentials Directory
+    match /admins/{adminId} {
+      allow get, list: if isSignedIn();
+      allow create, update, delete: if isAdmin();
+    }
+  }
+}

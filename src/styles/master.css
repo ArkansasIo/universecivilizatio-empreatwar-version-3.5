@@ -1,0 +1,25 @@
+/* ==========================================================================
+   MASTER CSS ENGINE
+   Imports Sub-CSS Modular Stylesheets (Themes, Components, Utilities)
+   ========================================================================== */
+
+@import "./sub/themes.css";
+@import "./sub/components.css";
+@import "./sub/utilities.css";
+
+/* Master Base Reset & Global Layout */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

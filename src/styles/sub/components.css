@@ -1,0 +1,98 @@
+/* ==========================================================================
+   COMPONENTS SUB-CSS ENGINE: Standard UI Elements, Panels, & Badges
+   ========================================================================== */
+
+/* Theme Selector Control Badges */
+.theme-selector-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.625rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.theme-selector-pill-white {
+  background-color: #ffffff;
+  color: #0f172a;
+  border: 1px solid #cbd5e1;
+}
+
+.theme-selector-pill-white:hover {
+  border-color: #0284c7;
+  box-shadow: 0 0 8px rgba(2, 132, 199, 0.25);
+}
+
+.theme-selector-pill-navy {
+  background-color: #0b1329;
+  color: #38bdf8;
+  border: 1px solid #1e293b;
+}
+
+.theme-selector-pill-navy:hover {
+  border-color: #38bdf8;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.35);
+}
+
+/* Master Panel Cards */
+.master-panel-card {
+  background-color: var(--bg-panel);
+  border: var(--panel-border);
+  box-shadow: var(--card-shadow);
+  padding: 1.25rem;
+  transition: all 0.2s ease;
+}
+
+.master-panel-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-light);
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+/* Database Terminal Styling */
+.sql-terminal-box {
+  background-color: #030712;
+  color: #38bdf8;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  border: 1px solid #1e293b;
+  border-radius: 2px;
+  padding: 0.875rem;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+/* Tactical Data Table Styling */
+.tactical-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.75rem;
+}
+
+.tactical-table th {
+  background-color: var(--bg-header);
+  color: var(--text-header);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  font-weight: 800;
+  text-transform: uppercase;
+  border: 1px solid var(--border-color);
+}
+
+.tactical-table td {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border-light);
+  color: var(--text-main);
+}
+
+.tactical-table tr:nth-child(even) {
+  background-color: var(--bg-alt);
+}
