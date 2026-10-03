@@ -290,14 +290,24 @@ export const MMORPGOgameView: React.FC<MMORPGOgameViewProps> = ({
 
                       <td className="p-3">
                         {!isEmpty ? (
-                          <div>
-                            <div className="font-bold text-[#111111] flex items-center gap-1.5">
-                              <span>🪐</span>
-                              <span>{slot.planetName}</span>
-                            </div>
-                            <div className="text-[10px] text-[#777777] font-mono">
-                              {slot.planetClass} • ⌀{slot.planetDiameterKm?.toLocaleString()}km •{' '}
-                              {slot.temperatureMin}°C to {slot.temperatureMax}°C
+                          <div className="flex items-center gap-2.5">
+                            <img
+                              src={`/assets/planets/${(slot.planetClass || 'terran').toLowerCase().replace(' ', '_')}.png`}
+                              alt={slot.planetName}
+                              className="w-9 h-9 rounded-full border border-[#111111] bg-[#0f172a] object-cover shrink-0 shadow-sm"
+                              onError={(e) => {
+                                e.currentTarget.onerror = null;
+                                e.currentTarget.src = '/assets/planets/terran.png';
+                              }}
+                            />
+                            <div>
+                              <div className="font-bold text-[#111111] flex items-center gap-1.5">
+                                <span>{slot.planetName}</span>
+                              </div>
+                              <div className="text-[10px] text-[#777777] font-mono">
+                                {slot.planetClass} • ⌀{slot.planetDiameterKm?.toLocaleString()}km •{' '}
+                                {slot.temperatureMin}°C to {slot.temperatureMax}°C
+                              </div>
                             </div>
                           </div>
                         ) : (
@@ -308,7 +318,15 @@ export const MMORPGOgameView: React.FC<MMORPGOgameViewProps> = ({
                       <td className="p-3">
                         {slot.hasMoon ? (
                           <div className="flex items-center gap-2">
-                            <span className="text-base">🌕</span>
+                            <img
+                              src="/assets/ogamex/planets/normal_moon_view.jpg"
+                              alt={slot.moonName || 'Moon'}
+                              className="w-7 h-7 rounded-full border border-[#111111] bg-[#0f172a] object-cover shrink-0 shadow-sm"
+                              onError={(e) => {
+                                e.currentTarget.onerror = null;
+                                e.currentTarget.src = '/assets/planets/dead.png';
+                              }}
+                            />
                             <div>
                               <span className="font-bold text-[#111111] block">{slot.moonName}</span>
                               <span className="text-[10px] text-[#777777] font-mono">
@@ -543,11 +561,22 @@ export const MMORPGOgameView: React.FC<MMORPGOgameViewProps> = ({
             {/* IPM */}
             <div className="border border-[#dedede] p-5 bg-[#fafafa] space-y-3">
               <div className="flex items-center justify-between">
-                <div>
-                  <h4 className="font-bold text-sm text-[#111111]">Interplanetary Missiles (IPM)</h4>
-                  <p className="text-xs text-[#666666]">
-                    Destroys planetary defense turrets and shield domes without fleet losses.
-                  </p>
+                <div className="flex items-center gap-3">
+                  <img
+                    src="/assets/defense/interplanetary_missile.png"
+                    alt="IPM"
+                    className="w-12 h-12 rounded border border-[#111111] bg-[#111827] object-cover shrink-0"
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = '/ogame/verteidigung/503.png';
+                    }}
+                  />
+                  <div>
+                    <h4 className="font-bold text-sm text-[#111111]">Interplanetary Missiles (IPM)</h4>
+                    <p className="text-xs text-[#666666]">
+                      Destroys planetary defense turrets and shield domes without fleet losses.
+                    </p>
+                  </div>
                 </div>
                 <span className="text-2xl font-bold font-mono text-[#111111]">
                   {missileSilo.ipmCount}
@@ -575,11 +604,22 @@ export const MMORPGOgameView: React.FC<MMORPGOgameViewProps> = ({
             {/* ABM */}
             <div className="border border-[#dedede] p-5 bg-[#fafafa] space-y-3">
               <div className="flex items-center justify-between">
-                <div>
-                  <h4 className="font-bold text-sm text-[#111111]">Anti-Ballistic Missiles (ABM)</h4>
-                  <p className="text-xs text-[#666666]">
-                    Automatically intercepts and neutralizes incoming hostile missile barrages.
-                  </p>
+                <div className="flex items-center gap-3">
+                  <img
+                    src="/assets/defense/anti_ballistic_missile.png"
+                    alt="ABM"
+                    className="w-12 h-12 rounded border border-[#111111] bg-[#111827] object-cover shrink-0"
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = '/ogame/verteidigung/502.png';
+                    }}
+                  />
+                  <div>
+                    <h4 className="font-bold text-sm text-[#111111]">Anti-Ballistic Missiles (ABM)</h4>
+                    <p className="text-xs text-[#666666]">
+                      Automatically intercepts and neutralizes incoming hostile missile barrages.
+                    </p>
+                  </div>
                 </div>
                 <span className="text-2xl font-bold font-mono text-[#16a34a]">
                   {missileSilo.abmCount}

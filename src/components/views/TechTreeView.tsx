@@ -201,15 +201,26 @@ export const TechTreeView: React.FC<TechTreeViewProps> = ({
                       : 'border-[#cccccc] hover:border-[#111111] bg-white'
                   }`}
                 >
-                  {/* Status Badges */}
-                  <div className="flex items-start justify-between gap-2 mb-2">
-                    <div>
-                      <span className="text-[10px] font-mono uppercase tracking-wider text-[#666666] block">
-                        {tech.branch.replace('_', ' ')} • {tech.category}
-                      </span>
-                      <h4 className="text-sm font-bold text-[#111111] leading-tight mt-0.5">
-                        {tech.name}
-                      </h4>
+                  {/* Status Badges & Image */}
+                  <div className="flex items-start justify-between gap-3 mb-2">
+                    <div className="flex items-center gap-3">
+                      <img
+                        src={`/assets/research/${tech.id}.png`}
+                        alt={tech.name}
+                        className="w-12 h-12 rounded border border-[#111111] bg-[#111827] object-cover shrink-0"
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src = '/assets/research/energy_tech.png';
+                        }}
+                      />
+                      <div>
+                        <span className="text-[10px] font-mono uppercase tracking-wider text-[#666666] block">
+                          {tech.branch.replace('_', ' ')} • {tech.category}
+                        </span>
+                        <h4 className="text-sm font-bold text-[#111111] leading-tight mt-0.5">
+                          {tech.name}
+                        </h4>
+                      </div>
                     </div>
 
                     <div className="text-right flex flex-col items-end">
@@ -313,6 +324,17 @@ export const TechTreeView: React.FC<TechTreeViewProps> = ({
           {selectedTech ? (
             <div className="border border-[#111111] bg-white p-5 sticky top-6 space-y-4">
               <div className="border-b border-[#111111] pb-3">
+                <div className="w-full h-36 mb-3 rounded border border-[#111111] overflow-hidden bg-[#0a0f1d] flex items-center justify-center">
+                  <img
+                    src={`/assets/research/${selectedTech.id}.png`}
+                    alt={selectedTech.name}
+                    className="w-full h-full object-contain p-2"
+                    onError={(e) => {
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = '/assets/research/energy_tech.png';
+                    }}
+                  />
+                </div>
                 <span className="text-[10px] font-mono uppercase text-[#666666] block">
                   TECHNOLOGY DOSSIER
                 </span>
